@@ -39,8 +39,8 @@ hint - you should be looking at the stage key inside of the objects
 */
 
 function getFinals(data) {
-	return data.filter(function (element) {
-		return element.Stage === "Final";
+	return data.filter(function (item) {
+		return item.Stage === "Final";
 	});
 }
 
@@ -51,8 +51,8 @@ Use the higher-order function called getYears to do the following:
 3. Return an array called years containing all of the years in the getFinals data set*/
 
 function getYears(array, getFinals) {
-	return getFinals(data).map(function (elements) {
-		return elemnts.Year;
+	return getFinals(array).map(function (elements) {
+		return elements.Year;
 	});
 }
 
@@ -63,8 +63,14 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */
 
-function getWinners(/* code here */) {
-	/* code here */
+function getWinners(array, getFinals) {
+	return getFinals(array).map(function (item) {
+		if (item["Home Team Goals"] > item["Away Team Goals"]) {
+			return item["Home Team Name"];
+		} else {
+			return item["Away Team Name"];
+		}
+	});
 }
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -77,9 +83,15 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-	/* code here */
+function getWinnersByYear(array, getYearsCB, getWinnersCB) {
+	const getYears = getYearsCB(array, getFinals);
+	const getWinners = getWinnersCB(array, getFinals);
+
+	return getYears.map((item, index) => {
+		return `In ${item}, ${getWinners[index]} won the world cup!`;
+	});
 }
+console.log(getWinnersByYear);
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -91,9 +103,7 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-	/* code here */
-}
+function getAverageGoals(getFinalsCB) {}
 
 /// 🥅 STRETCH 🥅 ///
 
